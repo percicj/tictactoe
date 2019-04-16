@@ -4,6 +4,7 @@
 namespace Board;
 
 use Bot\Bot;
+use Exception;
 
 class BoardController
 {
@@ -24,8 +25,25 @@ class BoardController
         $this->boardModel = $boardModel;
     }
 
-    public function move(array $position, $playerUnit = 'X')
+    public function move(array $position)
     {
+        //make player move
+        try {
+            $board = $this->boardModel->makeMove($position);
+        } catch (Exception $e) {
+            die('Problem while executing player move. Error: ' . $e->getMessage());
+        }
+
+        //make bot move
+        $botPosition = $this->bot->makeMove($board, $position[2]);
+
+        try {
+            $board = $this->boardModel->makeMove($botPosition);
+        } catch (Exception $e) {
+            die('Problem while executing bot move. Error: ' . $e->getMessage());
+        }
+
+        return $board;
     }
 
 }

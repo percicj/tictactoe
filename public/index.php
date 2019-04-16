@@ -2,10 +2,18 @@
 
 include('../vendor/autoload.php');
 
-use RestService\Server;
+use Api\TicTacToe;
+use Luracast\Restler\Restler;
 
+define("ROOTDIR", realpath('..'));
+
+session_set_cookie_params(600);
 session_start();
 
-Server::create('/', 'Api\TicTacToe')
-    ->collectRoutes()
-    ->run();
+try {
+    $r = new Restler();
+    $r->addAPIClass(TicTacToe::class);
+    $r->handle();
+} catch (Exception $e) {
+    die($e->getMessage());
+}

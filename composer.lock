@@ -4,50 +4,86 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b4228926e6a7051a2b502399c077c7d",
+    "content-hash": "e40084de22c002ec657ae270d49b28f3",
     "packages": [
         {
-            "name": "marcj/php-rest-service",
-            "version": "0.1.7",
+            "name": "luracast/restler",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/marcj/php-rest-service.git",
-                "reference": "38848264ee5c6dbb61291ead257ddd03b4b9cdb1"
+                "url": "https://github.com/Luracast/Restler.git",
+                "reference": "188968f6a15796077350f1be9c461f8d02c559a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marcj/php-rest-service/zipball/38848264ee5c6dbb61291ead257ddd03b4b9cdb1",
-                "reference": "38848264ee5c6dbb61291ead257ddd03b4b9cdb1",
+                "url": "https://api.github.com/repos/Luracast/Restler/zipball/188968f6a15796077350f1be9c461f8d02c559a8",
+                "reference": "188968f6a15796077350f1be9c461f8d02c559a8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
+            "conflict": {
+                "restler/framework": "3.*"
+            },
+            "require-dev": {
+                "behat/behat": "2.5.*@stable",
+                "bshaffer/oauth2-server-php": "v1.0",
+                "guzzle/guzzle": "~3.1.1",
+                "illuminate/view": "4.2.*",
+                "luracast/explorer": "*",
+                "mustache/mustache": "dev-master",
+                "rodneyrehm/plist": "dev-master",
+                "symfony/yaml": "*",
+                "twig/twig": "v1.13.0",
+                "zendframework/zendamf": "dev-master"
+            },
+            "suggest": {
+                "behat/behat": "Behaviour driven development testing framework (see require-dev for details)",
+                "bshaffer/oauth2-server-php": "Restler can provide OAuth2 authentication using this library (see require-dev for details)",
+                "guzzle/guzzle": "RESTful api HTTP client framework (see require-dev for details)",
+                "illuminate/view": "Restler can render HtmlView using laravel blade templates (see require-dev for details)",
+                "luracast/explorer": "Restler's very own api explorer (see require-dev for details)",
+                "mustache/mustache": "Restler can render HtmlView using mustache/handlebar templates (see require-dev for details)",
+                "rodneyrehm/plist": "Restler supports tho Apple plist xml format (see require-dev for details)",
+                "symfony/yaml": "Restler can produce content in yaml format as well (see require-dev for details)",
+                "twig/twig": "Restler can render HtmlView using twig templates (see require-dev for details)",
+                "zendframework/zendamf": "Support for the amf document format  (see require-dev for details)"
+            },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "v3": "v3.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
-                    "RestService": ""
+                    "Luracast\\Restler": "vendor/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "LGPL-2.1"
             ],
             "authors": [
                 {
-                    "name": "Marc J. Schmidt",
-                    "email": "marc@kryn.org",
-                    "homepage": "http://marcjschmidt.de"
+                    "name": "Luracast",
+                    "email": "arul@luracast.com"
+                },
+                {
+                    "name": "Nick nickl- Lombard",
+                    "email": "github@jigsoft.co.za"
                 }
             ],
-            "description": "PHPRestService is a simple and fast PHP class for server side RESTful APIs.",
+            "description": "Restler is a simple and effective multi-format Web API Server framework written in PHP. Just deal with your business logic in php, Restler will take care of the REST!",
+            "homepage": "http://luracast.com/products/restler/",
             "keywords": [
                 "api",
-                "php",
+                "framework",
                 "rest",
-                "restful"
+                "server"
             ],
-            "time": "2013-12-06T02:32:09+00:00"
+            "time": "2018-03-16T05:08:02+00:00"
         }
     ],
     "packages-dev": [],
@@ -56,6 +92,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-json": "^1.6"
+    },
     "platform-dev": []
 }

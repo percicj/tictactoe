@@ -17,13 +17,10 @@ class TicTacToe
         $this->boardController = BoardFactory::getBoardController();
     }
 
-    public function postStart()
+
+    public function postMove($x, $y, $unit = 'X')
     {
-
-    }
-
-    public function postMove()
-    {
-
+        $board = $this->boardController->move([$x, $y, $unit]);
+        var_dump($board);
     }
 }

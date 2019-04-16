@@ -2,6 +2,7 @@
 
 namespace Board;
 
+use Cache\CacheModel;
 use Exception;
 
 class BoardModel
@@ -11,16 +12,24 @@ class BoardModel
      */
     private $board;
 
-    public function __construct()
+    /**
+     * @var CacheModel
+     */
+    private $cacheModel;
+
+    public function __construct(CacheModel $cacheModel)
     {
-        if (!empty($_SESSION['board'])) {
-            $this->setBoard($_SESSION['board']);
+        $this->cacheModel = $cacheModel;
+        $cache = $this->cacheModel->getCache();
+        var_dump($cache);
+        if (!empty($cache)) {
+            $this->setBoard($cache);
         }
     }
 
     public function clearCurrentBoard()
     {
-        $_SESSION['board'];
+        $this->cacheModel->clearCache();
         $this->setBoard([]);
     }
 
@@ -39,6 +48,7 @@ class BoardModel
     public function setBoard(array $board): void
     {
         $this->board = $board;
+        $this->cacheModel->setCache($board);
     }
 
     /**
@@ -56,11 +66,10 @@ class BoardModel
 
     /**
      * @param array $position
-     * @param string $unit
      * @return array
      * @throws Exception
      */
-    public function makeMove(array $position, string $unit)
+    public function makeMove(array $position)
     {
         $newPosition = $this->parsePosition($position);
         //check if move legal
@@ -69,14 +78,15 @@ class BoardModel
         }
 
         //update board
-        $this->setNewBoard($newPosition, $unit);
+        $this->setNewBoard($newPosition);
 
         return $this->board;
     }
 
-    private function setNewBoard(Position $newPosition, string $unit)
+    private function setNewBoard(Position $newPosition)
     {
-        $this->board[$newPosition->getX()][$newPosition->getY()] = $unit;
+        $this->board[$newPosition->getX()][$newPosition->getY()] = $newPosition->getUnit();
+        $this->cacheModel->setCache($this->board);
     }
 
 }

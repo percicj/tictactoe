@@ -27,6 +27,6 @@ class Bot implements MoveInterface
      */
     public function makeMove(array $boardState, string $playerUnit = 'X'): array
     {
-        return [];
+        return [0, 2, 'O'];
     }
 }
