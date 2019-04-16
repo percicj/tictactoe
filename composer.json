@@ -1,0 +1,18 @@
+{
+    "name": "jani/tictactoe",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Jani Percic",
+            "email": "jani.percic@gmail.com"
+        }
+    ],
+    "require": {
+        "marcj/php-rest-service": "*"
+    },
+    "autoload": {
+        "classmap": [
+            "src"
+        ]
+    }
+}
