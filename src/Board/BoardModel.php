@@ -23,6 +23,10 @@ class BoardModel
         ['','','']
     ];
 
+    /**
+     * BoardModel constructor.
+     * @param CacheModel $cacheModel
+     */
     public function __construct(CacheModel $cacheModel)
     {
         $this->cacheModel = $cacheModel;
@@ -63,6 +67,10 @@ class BoardModel
         return $this->board;
     }
 
+    /**
+     * @param array $position
+     * @return Position
+     */
     private function parsePosition(array $position)
     {
         return new Position($position);
@@ -87,6 +95,9 @@ class BoardModel
         return $this->board;
     }
 
+    /**
+     * @param Position $newPosition
+     */
     private function setNewBoard(Position $newPosition)
     {
         $this->board[$newPosition->getX()][$newPosition->getY()] = $newPosition->getUnit();

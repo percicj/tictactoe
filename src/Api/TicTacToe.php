@@ -12,6 +12,9 @@ class TicTacToe
      */
     private $boardController;
 
+    /**
+     * TicTacToe constructor.
+     */
     public function __construct()
     {
         $this->boardController = BoardFactory::getBoardController();
@@ -20,17 +23,32 @@ class TicTacToe
     public function getLoad()
     {
         $board = $this->boardController->load();
-        echo json_encode($board);
+        $this->printOutput($board);
     }
 
-    public function postMove($x, $y, $unit = 'X')
+    /**
+     * @param string $x
+     * @param string $y
+     * @param string $unit
+     */
+    public function postMove(string $x, string $y, string $unit = 'X') : void
     {
         $board = $this->boardController->move([$x, $y, $unit]);
-        echo(json_encode($board));
+        $this->printOutput($board);
     }
 
-    public function getRestart()
+    public function getRestart() : void
     {
-        $this->boardController->restart();
+        $board = $this->boardController->restart();
+        $this->printOutput($board);
+    }
+
+    /**
+     * @param mixed $output
+     * @return string
+     */
+    private function printOutput($output) : void
+    {
+        echo json_encode($output);
     }
 }

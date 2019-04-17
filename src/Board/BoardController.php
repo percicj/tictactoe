@@ -19,14 +19,25 @@ class BoardController
     private $boardModel;
 
 
+    /**
+     * BoardController constructor.
+     * @param Bot $bot
+     * @param BoardModel $boardModel
+     */
     public function __construct(Bot $bot, BoardModel $boardModel)
     {
         $this->bot = $bot;
         $this->boardModel = $boardModel;
     }
 
-    public function move(array $position)
+    /**
+     * @param array $position
+     * @return array
+     */
+    public function move(array $position) : array
     {
+        $playerUnit = $position[2];
+
         //make player move
         try {
             $board = $this->boardModel->makeMove($position);
@@ -34,14 +45,15 @@ class BoardController
             die('Problem while executing player move. Error: ' . $e->getMessage());
         }
 
-        if (GameRules::isWin($board, $position[2])) {
+        if (GameRules::isWin($board, $playerUnit)) {
             return [
                 'board' => $board,
                 'win' => 'player'
             ];
         }
         //make bot move
-        $botPosition = $this->bot->makeMove($board, $position[2]);
+        $botPosition = $this->bot->makeMove($board, $playerUnit);
+        $botUnit = $botPosition[2];
 
         try {
             $board = $this->boardModel->makeMove($botPosition);
@@ -49,7 +61,7 @@ class BoardController
             die('Problem while executing bot move. Error: ' . $e->getMessage());
         }
 
-        if (GameRules::isWin($board, $botPosition[2])) {
+        if (GameRules::isWin($board, $botUnit)) {
             return [
                 'board' => $board,
                 'win' => 'ai'
@@ -63,7 +75,10 @@ class BoardController
         ];
     }
 
-    public function load()
+    /**
+     * @return array
+     */
+    public function load() : array
     {
         $board = $this->boardModel->getBoard();
         return [
@@ -72,8 +87,16 @@ class BoardController
         ];
     }
 
-    public function restart()
+    /**
+     * @return array
+     */
+    public function restart() : array
     {
         $this->boardModel->clearCurrentBoard();
+        $board = $this->boardModel->getBoard();
+        return [
+            'board' => $board,
+            'win' => ''
+        ];
     }
 }

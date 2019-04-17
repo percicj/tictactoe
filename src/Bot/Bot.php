@@ -9,6 +9,10 @@ class Bot implements MoveInterface
      */
     private $winFunction;
 
+    /**
+     * Bot constructor.
+     * @param array $winFunction
+     */
     public function __construct(array $winFunction)
     {
         $this->winFunction = $winFunction;
@@ -41,10 +45,14 @@ class Bot implements MoveInterface
 
         $move = $this->minmax($boardState, $aiUnit, $playerUnit, $aiUnit);
 
-        return [$move['position'][0], $move['position'][1], $move['unit']];
+        return [$move['position'][1], $move['position'][0], $move['unit']];
     }
 
-    private function getAvailableMoves($board)
+    /**
+     * @param $board
+     * @return array
+     */
+    private function getAvailableMoves($board) : array
     {
         $availableMoves = [];
         foreach ($board as $x => $column) {
@@ -58,7 +66,14 @@ class Bot implements MoveInterface
         return $availableMoves;
     }
 
-    private function minmax($board, $player, $playerUnit, $aiUnit)
+    /**
+     * @param $board
+     * @param $player
+     * @param $playerUnit
+     * @param $aiUnit
+     * @return array|mixed
+     */
+    private function minmax($board, $player, $playerUnit, $aiUnit) : array
     {
         $availableMoves = $this->getAvailableMoves($board);
 
@@ -116,7 +131,12 @@ class Bot implements MoveInterface
         return $moves[$bestMove];
     }
 
-    private function hasWon($board, $unit)
+    /**
+     * @param $board
+     * @param $unit
+     * @return bool
+     */
+    private function hasWon($board, $unit) : bool
     {
         return call_user_func($this->winFunction, $board, $unit);
     }

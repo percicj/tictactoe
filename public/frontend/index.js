@@ -26,6 +26,13 @@ $(document).ready(
                     unit: 'X'
                 }
             });
+        });
+
+        $('#restart').click(function () {
+            $.ajax({
+                url: 'http://tictactoe.com/tictactoe/restart',
+                success: fillBoard,
+            });
         })
     }
 );
