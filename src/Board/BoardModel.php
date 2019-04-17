@@ -17,20 +17,24 @@ class BoardModel
      */
     private $cacheModel;
 
+    const DEFAULT_BOARD = [
+        ['','',''],
+        ['','',''],
+        ['','','']
+    ];
+
     public function __construct(CacheModel $cacheModel)
     {
         $this->cacheModel = $cacheModel;
         $cache = $this->cacheModel->getCache();
-        var_dump($cache);
-        if (!empty($cache)) {
-            $this->setBoard($cache);
-        }
+        $board = !empty($cache) ? $cache : self::DEFAULT_BOARD;
+        $this->setBoard($board);
     }
 
     public function clearCurrentBoard()
     {
-        $this->cacheModel->clearCache();
-        $this->setBoard([]);
+        $this->cacheModel->setCache(self::DEFAULT_BOARD);
+        $this->setBoard(self::DEFAULT_BOARD);
     }
 
     /**

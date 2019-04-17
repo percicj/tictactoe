@@ -34,6 +34,12 @@ class BoardController
             die('Problem while executing player move. Error: ' . $e->getMessage());
         }
 
+        if (GameRules::isWin($board, $position[2])) {
+            return [
+                'board' => $board,
+                'win' => 'player'
+            ];
+        }
         //make bot move
         $botPosition = $this->bot->makeMove($board, $position[2]);
 
@@ -43,7 +49,22 @@ class BoardController
             die('Problem while executing bot move. Error: ' . $e->getMessage());
         }
 
-        return $board;
+        if (GameRules::isWin($board, $botPosition[2])) {
+            return [
+                'board' => $board,
+                'win' => 'ai'
+            ];
+        }
+
+
+        return [
+            'board' => $board,
+            'win' => ''
+        ];
     }
 
+    public function restart()
+    {
+        $this->boardModel->clearCurrentBoard();
+    }
 }

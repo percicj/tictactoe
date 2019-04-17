@@ -12,8 +12,13 @@ class BoardFactory
      * @return BoardController
      */
     static function getBoardController() {
+
+        $winFunc = [GameRules::class, 'isWin'];
+
         return new BoardController(
-            new Bot(),
+            new Bot(
+                $winFunc
+            ),
             new BoardModel(
                 new CacheModel(
                     new FileStorageRepository()

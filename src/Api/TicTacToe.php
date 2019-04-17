@@ -23,4 +23,9 @@ class TicTacToe
         $board = $this->boardController->move([$x, $y, $unit]);
         var_dump($board);
     }
+
+    public function postRestart()
+    {
+        $this->boardController->restart();
+    }
 }

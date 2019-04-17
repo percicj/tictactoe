@@ -25,8 +25,8 @@ class Position
      */
     public function __construct(array $position)
     {
-        $this->x = $position[0];
-        $this->y = $position[1];
+        $this->x = $position[1];
+        $this->y = $position[0];
         $this->unit = $position[2];
     }
 
