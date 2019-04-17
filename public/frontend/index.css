@@ -12,4 +12,6 @@ div {
     height: 30px;
     border: 1px solid black;
     float: left;
+    text-align: center;
+    padding-top: 6px;
 }
