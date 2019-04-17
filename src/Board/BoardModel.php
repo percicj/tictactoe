@@ -37,7 +37,6 @@ class BoardModel
 
     public function clearCurrentBoard()
     {
-        $this->cacheModel->setCache(self::DEFAULT_BOARD);
         $this->setBoard(self::DEFAULT_BOARD);
     }
 
