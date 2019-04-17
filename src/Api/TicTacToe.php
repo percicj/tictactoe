@@ -17,14 +17,19 @@ class TicTacToe
         $this->boardController = BoardFactory::getBoardController();
     }
 
+    public function getLoad()
+    {
+        $board = $this->boardController->load();
+        echo json_encode($board);
+    }
 
     public function postMove($x, $y, $unit = 'X')
     {
         $board = $this->boardController->move([$x, $y, $unit]);
-        var_dump($board);
+        echo(json_encode($board));
     }
 
-    public function postRestart()
+    public function getRestart()
     {
         $this->boardController->restart();
     }

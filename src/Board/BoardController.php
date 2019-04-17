@@ -63,6 +63,15 @@ class BoardController
         ];
     }
 
+    public function load()
+    {
+        $board = $this->boardModel->getBoard();
+        return [
+            'board' => $board,
+            'win' => ''
+        ];
+    }
+
     public function restart()
     {
         $this->boardModel->clearCurrentBoard();
