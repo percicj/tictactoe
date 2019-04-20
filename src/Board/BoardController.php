@@ -42,7 +42,9 @@ class BoardController
         try {
             $board = $this->boardModel->makeMove($position);
         } catch (Exception $e) {
-            die('Problem while executing player move. Error: ' . $e->getMessage());
+            return [
+                'error' => 'Problem while executing player move. Error: ' . $e->getMessage()
+            ];
         }
 
         if (GameRules::isWin($board, $playerUnit)) {
@@ -67,7 +69,9 @@ class BoardController
         try {
             $board = $this->boardModel->makeMove($botPosition);
         } catch (Exception $e) {
-            die('Problem while executing bot move. Error: ' . $e->getMessage());
+            return [
+                'error' => 'Problem while executing ai move. Error: ' . $e->getMessage()
+            ];
         }
 
         if (GameRules::isWin($board, $botUnit)) {

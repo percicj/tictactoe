@@ -5,6 +5,7 @@ namespace Test\Board;
 use Board\BoardController;
 use Board\BoardModel;
 use Bot\Bot;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class BoardControllerTest extends TestCase
@@ -86,6 +87,24 @@ class BoardControllerTest extends TestCase
         $this->assertEquals($expectedResult, $result);
     }
 
+    public function testMovePlayerException()
+    {
+        $errorMessage = 'Illegal move';
+        $expectedResult = [
+            'error' => 'Problem while executing player move. Error: ' . $errorMessage
+        ];
+
+        $this->boardStub->expects($this->at(0))->method('makeMove')->will($this->throwException(new Exception($errorMessage)));
+        $boardController = new BoardController(
+            $this->botStub,
+            $this->boardStub
+        );
+
+        $result = $boardController->move(['0', '0', 'X']);
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
     public function testMoveAiWins()
     {
         $boardPlayer = [
@@ -112,6 +131,35 @@ class BoardControllerTest extends TestCase
         $this->boardStub->expects($this->at(0))->method('makeMove')->with($playerMove)->willReturn($boardPlayer);
         $this->botStub->expects($this->once())->method('makeMove')->with($boardPlayer, $playerMove[2])->willReturn($aiMove);
         $this->boardStub->expects($this->at(1))->method('makeMove')->with($aiMove)->willReturn($boardAi);
+        $boardController = new BoardController(
+            $this->botStub,
+            $this->boardStub
+        );
+
+        $result = $boardController->move($playerMove);
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function testMoveAiException()
+    {
+        $errorMessage = 'Illegal move';
+        $expectedResult = [
+            'error' => 'Problem while executing ai move. Error: ' . $errorMessage
+        ];
+
+        $boardPlayer = [
+            ['X','',''],
+            ['','X','O'],
+            ['','X','O'],
+        ];
+
+        $playerMove = ['2', '1', 'X'];
+
+        $aiMove = ['2', '0', 'O'];
+
+        $this->boardStub->expects($this->at(0))->method('makeMove')->with($playerMove)->willReturn($boardPlayer);
+        $this->botStub->expects($this->once())->method('makeMove')->with($boardPlayer, $playerMove[2])->willReturn($aiMove);
+        $this->boardStub->expects($this->at(1))->method('makeMove')->with($aiMove)->will($this->throwException(new Exception($errorMessage)));
         $boardController = new BoardController(
             $this->botStub,
             $this->boardStub
