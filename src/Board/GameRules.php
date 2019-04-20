@@ -23,8 +23,23 @@ class GameRules implements GameRulesInterface
         );
     }
 
+    /**
+     * If player as going last didn't win and there are no more moves
+     * we call it a draw
+     *
+     * @param array $board
+     * @return bool
+     */
     public static function isDraw(array $board)
     {
+        foreach ($board as $x => $column) {
+            foreach ($column as $y => $spot) {
+                if (empty($spot)) {
+                    return false;
+                }
+            }
+        }
 
+        return true;
     }
 }

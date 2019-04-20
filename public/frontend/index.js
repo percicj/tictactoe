@@ -1,4 +1,4 @@
-function fillBoard(result) {
+function handleBoard(result) {
     const board = result.board;
     for(let y=0; y<board.length; y++) {
         let row = board[y];
@@ -6,33 +6,43 @@ function fillBoard(result) {
             $('#cell-' + x + '-' +y).html(row[x]);
         }
     }
+    const win = result.win;
+    if (win) {
+        $('#winner').html(win);
+        $('.cell').off('click');
+    }
+}
+
+function bindClick() {
+    $('.cell').click(function (e) {
+        $.ajax({
+            url: 'http://tictactoe.com/tictactoe/move',
+            success: handleBoard,
+            method: 'POST',
+            data: {
+                x: e.currentTarget.dataset.x,
+                y: e.currentTarget.dataset.y,
+                unit: 'X'
+            }
+        });
+    });
 }
 
 $(document).ready(
     function () {
         $.ajax({
             url: 'http://tictactoe.com/tictactoe/load',
-            success: fillBoard
+            success: handleBoard
         });
 
-        $('.cell').click(function (e) {
-            $.ajax({
-                url: 'http://tictactoe.com/tictactoe/move',
-                success: fillBoard,
-                method: 'POST',
-                data: {
-                    x: e.currentTarget.dataset.x,
-                    y: e.currentTarget.dataset.y,
-                    unit: 'X'
-                }
-            });
-        });
+        bindClick();
 
         $('#restart').click(function () {
             $.ajax({
                 url: 'http://tictactoe.com/tictactoe/restart',
-                success: fillBoard,
+                success: handleBoard,
             });
+            bindClick();
         })
     }
 );

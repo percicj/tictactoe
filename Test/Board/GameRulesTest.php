@@ -87,4 +87,31 @@ class GameRulesTest extends TestCase
             ],
         ];
     }
+
+    public function testIsDrawTrue()
+    {
+        $board = [
+            ['X', 'X', 'O'],
+            ['O', 'O', 'X'],
+            ['X', 'O', 'X'],
+        ];
+
+        $result = GameRules::isDraw($board);
+
+        $this->assertTrue($result);
+    }
+
+    public function testIsDrawFalse()
+    {
+        $board = [
+            ['X', 'X', 'O'],
+            ['O', '', 'X'],
+            ['X', 'O', 'X'],
+        ];
+
+        $result = GameRules::isDraw($board);
+
+        $this->assertFalse($result);
+    }
+
 }

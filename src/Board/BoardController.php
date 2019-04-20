@@ -48,9 +48,18 @@ class BoardController
         if (GameRules::isWin($board, $playerUnit)) {
             return [
                 'board' => $board,
-                'win' => 'player'
+                'win' => 'player wins'
             ];
         }
+
+        //if no moves are left and player didn't win, it's a tie
+        if (GameRules::isDraw($board)) {
+            return [
+                'board' => $board,
+                'win' => 'draw'
+            ];
+        }
+
         //make bot move
         $botPosition = $this->bot->makeMove($board, $playerUnit);
         $botUnit = $botPosition[2];
@@ -64,10 +73,9 @@ class BoardController
         if (GameRules::isWin($board, $botUnit)) {
             return [
                 'board' => $board,
-                'win' => 'ai'
+                'win' => 'ai wins'
             ];
         }
-
 
         return [
             'board' => $board,
